@@ -1,0 +1,27 @@
+---
+import CopyEmail from './CopyEmail.astro';
+import { profile } from '../data/content';
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = '從一個好問題，開始一場對話。',
+  text = '資料工程、職涯、自我成長或教育。帶著你的好奇，我們聊聊。',
+} = Astro.props;
+---
+
+<section class="coffee-section" aria-labelledby="coffee-title">
+  <div class="container coffee-inner">
+    <div>
+      <p class="eyebrow">LET’S CONNECT</p>
+      <h2 id="coffee-title">{title}</h2>
+      <p>{text}</p>
+    </div>
+    <div class="coffee-actions">
+      <CopyEmail label="找我 Coffee Chat" variant="button-lime" />
+      <span class="email-address">{profile.email}</span>
+      <small>點一下，複製我的 Email</small>
+    </div>
+  </div>
+</section>

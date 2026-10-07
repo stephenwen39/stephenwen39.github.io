@@ -1,0 +1,79 @@
+<aside id="development-audit" hidden aria-label="開發檢查工具">
+  <button type="button">執行無障礙檢查</button>
+  <pre aria-live="polite"></pre>
+</aside>
+<style>
+  aside {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 200;
+    padding: 16px;
+    width: min(560px, calc(100vw - 32px));
+    max-height: 60vh;
+    overflow: auto;
+    color: #111;
+    background: white;
+    border: 2px solid #111;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px;
+    border: 1px solid;
+    cursor: pointer;
+  }
+  pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: 14px;
+  }
+</style>
+<script>
+  // Local development only: production builds remove the audit dependency.
+  if (
+    import.meta.env.DEV &&
+    new URLSearchParams(location.search).has('audit')
+  ) {
+    const panel = document.querySelector<HTMLElement>('#development-audit')!;
+    panel.hidden = false;
+    panel.querySelector('button')!.addEventListener('click', async () => {
+      const output = panel.querySelector('pre')!;
+      output.textContent = '檢查中…';
+      const { default: axe } = await import('axe-core');
+      await document.fonts.ready;
+      await Promise.all(
+        document
+          .getAnimations()
+          .map((animation) => animation.finished.catch(() => undefined)),
+      );
+      const results = await axe.run(
+        { exclude: [['#development-audit']] },
+        {
+          runOnly: {
+            type: 'tag',
+            values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'],
+          },
+        },
+      );
+      output.textContent = JSON.stringify(
+        {
+          violations: results.violations.map(({ id, impact, nodes }) => ({
+            id,
+            impact,
+            nodes: nodes.map(({ target, failureSummary }) => ({
+              target,
+              failureSummary,
+            })),
+          })),
+          passed: results.passes.length,
+          incomplete: results.incomplete.map(({ id, nodes }) => ({
+            id,
+            targets: nodes.map(({ target }) => target),
+          })),
+        },
+        null,
+        2,
+      );
+    });
+  }
+</script>

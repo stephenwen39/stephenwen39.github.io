@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+import CoffeeChat from '../components/CoffeeChat.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import { profile, posts } from '../data/content';
+---
+
+<Base
+  title="自媒體與自我成長 — Stephen Wen"
+  description="在 Threads 和 Stephen Wen 一起思考自我成長、職涯發展與科技。從真實的工程、教育與生活經驗出發，持續探索，公開學習。"
+  theme="growth"
+>
+  <section class="growth-hero container">
+    <a href="/" class="back-link">
+      首頁 / 成長內容
+    </a>
+    <div class="growth-heading">
+      <div>
+        <p class="eyebrow">03 / THINKING OUT LOUD</p>
+        <h1>
+          把思考寫下來，
+          <br />
+          讓成長有跡可循。
+        </h1>
+        <p class="detail-lead">
+          我在 Threads 分享自我成長、職涯與科技。
+          <br />
+          有實作裡的體會，也有還在探索的問題。
+        </p>
+        <a
+          class="button"
+          href={profile.socials[0].url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          到 Threads 和我交流<span class="sr-only">（另開新分頁）</span>
+        </a>
+      </div>
+      <aside class="growth-note">
+        <span class="eyebrow">A NOTE TO MYSELF</span>
+        <blockquote>
+          當你不再想著成為別人，
+          <br />
+          而是成為自己的時候，
+          <br />
+          你就會得到真正的自由。
+        </blockquote>
+        <span class="note-signature">Stephen</span>
+        <a
+          href="https://www.threads.com/@iam_wei_stephen/post/DdvdwcRn5j5"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Threads · 2026.09.26<span class="sr-only">（另開新分頁）</span>
+        </a>
+      </aside>
+    </div>
+    <div class="growth-proof">
+      <span class="threads-handle">@iam_wei_stephen</span>
+      <span>從資料工程與教育現場，延伸到生活裡的問題。</span>
+      <span>持續探索 · 公開學習</span>
+    </div>
+  </section>
+  <section class="topics-section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">QUESTIONS WORTH ASKING</p>
+          <h2>最近，反覆回到的幾個問題。</h2>
+        </div>
+      </div>
+      <div class="topics-grid">
+        <article>
+          <span>01 / 自驅力</span>
+          <h3>
+            你為什麼，
+            <br />
+            想做這件事？
+          </h3>
+          <p>探索自己的價值與動機。從「別人說應該」走向「這是我在乎的」。</p>
+        </article>
+        <article>
+          <span>02 / 職涯與成長</span>
+          <h3>
+            工作與生活，
+            <br />
+            能有自己的樣子嗎？
+          </h3>
+          <p>在熱愛、擅長、世界需要與報酬之間，找到適合自己的組合。</p>
+        </article>
+        <article>
+          <span>03 / 科技與人</span>
+          <h3>
+            工具變了，
+            <br />
+            我們如何跟著成長？
+          </h3>
+          <p>從資料工程、AI 與工作的改變，思考技術如何影響個人與社會。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="container section-space" aria-labelledby="posts-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">START READING HERE</p>
+        <h2 id="posts-heading">從這幾篇，開始一段對話。</h2>
+      </div>
+      <span class="section-aside">我的 Threads 精選</span>
+    </div>
+    <div class="post-list">
+      {posts.map((post, i) => (
+        <a
+          href={post.url}
+          class="post-card"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="post-number">0{i + 1}</span>
+          <div>
+            <div class="post-meta">
+              <span>{post.theme}</span>
+              <time datetime={post.date}>{post.date.replaceAll('-', '.')}</time>
+            </div>
+            <h3>{post.title}</h3>
+            <p>{post.summary}</p>
+            <span class="post-source">
+              到 Threads 讀原文<span class="sr-only">（另開新分頁）</span>
+            </span>
+          </div>
+          <span class="post-open" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="growth-about container">
+    <p class="eyebrow">BEHIND THE WORDS</p>
+    <div>
+      <h2>
+        寫下來的，
+        <br />
+        也是我正在練習的。
+      </h2>
+      <p>
+        白天，我在資料系統裡釐清問題；工作之外，我在課輔現場學習陪伴。這些看似不同的經驗，讓我一次次回到「人怎麼學習、怎麼選擇、怎麼改變」的問題。
+      </p>
+      <p>
+        我把自己的觀察公開寫下來。也歡迎你帶著不同的經驗與觀點，一起讓討論更完整。
+      </p>
+      <div class="writing-links">
+        <a
+          href={profile.socials[0].url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Threads
+          <span>
+            日常思考與對話<span class="sr-only">（另開新分頁）</span>
+          </span>
+        </a>
+        <a
+          href={profile.socials[2].url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Substack
+          <span>
+            資料敘事與長篇分享<span class="sr-only">（另開新分頁）</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <RelatedPages current="/growth/" />
+  <CoffeeChat
+    title="某個問題，也讓你想了很久嗎？"
+    text="如果一篇內容讓你想到自己的故事，歡迎到 Threads 留言，或約一場 Coffee Chat。"
+  />
+</Base>

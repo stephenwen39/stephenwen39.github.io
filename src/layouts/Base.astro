@@ -1,0 +1,267 @@
+---
+import '../styles/global.css';
+import '../styles/details.css';
+import { profile, navigation } from '../data/content';
+import CopyEmail from '../components/CopyEmail.astro';
+import DevelopmentAudit from '../components/DevelopmentAudit.astro';
+import portrait from '../assets/stephen.jpg';
+interface Props {
+  title?: string;
+  description?: string;
+  theme?: string;
+}
+const {
+  title = 'Stephen Wen — 資料工程師、志工老師與成長內容創作者',
+  description = '認識 Stephen Wen：資料工程師、教育志工與 Threads 成長內容創作者。探索資料工程成果、志工經驗與自我成長內容。',
+  theme = 'home',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  alternateName: 'Chan Wei Wen',
+  jobTitle: 'Senior Data Engineer',
+  url: Astro.site?.href,
+  sameAs: profile.socials.map((x) => x.url),
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'National Cheng Kung University' },
+    { '@type': 'CollegeOrUniversity', name: 'Shih Hsin University' },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#123e31" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:site_name" content="Stephen Wen" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(portrait.src, Astro.site)} />
+    <meta property="og:image:alt" content="Stephen Wen 的個人照片" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(portrait.src, Astro.site)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body class={`theme-${theme}`}>
+    {import.meta.env.DEV && <DevelopmentAudit />}
+    <a class="skip-link" href="#main">
+      跳到主要內容
+    </a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Stephen Wen，首頁">
+          <span class="brand-mark" aria-hidden="true">
+            s<span>.</span>
+          </span>
+          <span>
+            Stephen Wen<span class="brand-sub">工程・教育・成長</span>
+          </span>
+        </a>
+        <nav class="desktop-nav" aria-label="主要導覽">
+          {navigation.map((item) => (
+            <a
+              href={item.href}
+              aria-current={
+                Astro.url.pathname === item.href ? 'page' : undefined
+              }
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <div class="header-actions">
+          <CopyEmail variant="button-small" />
+          <button
+            class="menu-toggle"
+            aria-label="開啟導覽選單"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <noscript>
+      <style is:inline>
+        .copy-email,
+        .menu-toggle {
+          display: none !important;
+        }
+        .no-script-nav {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          padding-block: 16px;
+        }
+        .no-script-email {
+          padding-bottom: 16px;
+          overflow-wrap: anywhere;
+        }
+      </style>
+      <nav class="no-script-nav container" aria-label="無 JavaScript 導覽">
+        {navigation.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
+      <p class="no-script-email container">
+        聯絡我：{profile.email}（可手動複製）
+      </p>
+    </noscript>
+    <dialog id="mobile-menu" class="mobile-menu" aria-label="網站導覽">
+      <div class="mobile-menu-top">
+        <span class="eyebrow">EXPLORE STEPHEN</span>
+        <button type="button" class="menu-close" aria-label="關閉導覽選單">
+          關閉 ×
+        </button>
+      </div>
+      <nav aria-label="行動版導覽">
+        {navigation.map((item, i) => (
+          <a
+            href={item.href}
+            aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+          >
+            <span>0{i + 1}</span>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </dialog>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-main">
+        <a class="footer-brand" href="/">
+          Stephen Wen<span>保持好奇，持續成長。</span>
+        </a>
+        <div class="footer-links">
+          {profile.socials.map((s) => (
+            <a href={s.url} target="_blank" rel="noopener noreferrer">
+              {s.label}
+              <span class="sr-only">（另開新分頁）</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© {new Date().getFullYear()} Stephen Wen</span>
+        <span>最後更新 {profile.updated} · Taiwan</span>
+      </div>
+    </footer>
+    <div
+      class="toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+    <div class="manual-copy" hidden>
+      <label for="manual-email">請手動複製 Email</label>
+      <input id="manual-email" readonly value={profile.email} />
+      <button type="button" class="manual-close" aria-label="關閉手動複製欄位">
+        關閉
+      </button>
+    </div>
+    <script>
+      const toast = document.querySelector<HTMLElement>('.toast');
+      const manual = document.querySelector<HTMLElement>('.manual-copy');
+      let toastTimer: ReturnType<typeof setTimeout>;
+      const buttonTimers = new WeakMap<
+        HTMLButtonElement,
+        ReturnType<typeof setTimeout>
+      >();
+      document
+        .querySelectorAll<HTMLButtonElement>('[data-copy-email]')
+        .forEach((button) => {
+          const label = button.querySelector('span')!;
+          const original = label.textContent;
+          button.addEventListener('click', async () => {
+            const email = button.dataset.copyEmail!;
+            let success = false;
+            try {
+              await navigator.clipboard.writeText(email);
+              success = true;
+            } catch {
+              const field = document.createElement('textarea');
+              field.value = email;
+              field.style.cssText = 'position:fixed;left:-9999px;top:0';
+              field.setAttribute('aria-hidden', 'true');
+              document.body.append(field);
+              field.select();
+              try {
+                success = document.execCommand('copy');
+              } catch {
+                success = false;
+              }
+              field.remove();
+              button.focus({ preventScroll: true });
+            }
+            clearTimeout(toastTimer);
+            if (success) {
+              if (manual) manual.hidden = true;
+              label.textContent = 'Email 已複製 ✓';
+              clearTimeout(buttonTimers.get(button));
+              buttonTimers.set(
+                button,
+                setTimeout(() => {
+                  label.textContent = original;
+                }, 2200),
+              );
+              if (toast) {
+                toast.textContent = `已複製 ${email}`;
+                toast.classList.add('visible');
+              }
+              toastTimer = setTimeout(
+                () => toast?.classList.remove('visible'),
+                3200,
+              );
+            } else {
+              toast?.classList.remove('visible');
+              if (manual) {
+                manual.hidden = false;
+                manual.querySelector<HTMLInputElement>('input')?.select();
+              }
+            }
+          });
+        });
+      document.querySelector('.manual-close')?.addEventListener('click', () => {
+        if (manual) manual.hidden = true;
+      });
+      const menu = document.querySelector<HTMLDialogElement>('#mobile-menu')!;
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle')!;
+      toggle.addEventListener('click', () => {
+        menu.showModal();
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      });
+      menu
+        .querySelector('.menu-close')
+        ?.addEventListener('click', () => menu.close());
+      menu.addEventListener('close', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        toggle.focus({ preventScroll: true });
+      });
+      menu.addEventListener('click', (e) => {
+        if (e.target === menu) menu.close();
+      });
+      matchMedia('(min-width: 801px)').addEventListener('change', (e) => {
+        if (e.matches && menu.open) menu.close();
+      });
+    </script>
+  </body>
+</html>

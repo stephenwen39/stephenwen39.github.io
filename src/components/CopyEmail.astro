@@ -1,0 +1,29 @@
+---
+import { profile } from '../data/content';
+interface Props {
+  label?: string;
+  variant?: string;
+}
+const { label = 'Coffee Chat', variant = '' } = Astro.props;
+---
+
+<button
+  class:list={['button', 'copy-email', variant]}
+  type="button"
+  data-copy-email={profile.email}
+  aria-label={`${label}，複製 Email`}
+>
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    aria-hidden="true"
+  >
+    <path d="M5 8h12v7a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V8Z" />
+    <path d="M17 9h2a3 3 0 1 1 0 6h-2M7 3v2m4-2v2m4-2v2M3 20h17" />
+  </svg>
+  <span>{label}</span>
+</button>

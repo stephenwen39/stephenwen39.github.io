@@ -1,0 +1,21 @@
+---
+import { navigation } from '../data/content';
+interface Props {
+  current: string;
+}
+const { current } = Astro.props;
+---
+
+<aside class="related-pages container" aria-label="繼續認識 Stephen">
+  <span class="eyebrow">認識我的其他面向</span>
+  <div>
+    {navigation
+      .filter((n) => n.href !== current && n.href !== '/')
+      .map((n) => (
+        <a href={n.href}>
+          {n.label}
+          <span aria-hidden="true">↗</span>
+        </a>
+      ))}
+  </div>
+</aside>
