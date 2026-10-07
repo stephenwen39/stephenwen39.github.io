@@ -4,6 +4,7 @@ import path from 'node:path';
 import { gzipSync } from 'node:zlib';
 
 const root = path.resolve('dist');
+const inlineScripts = new Set();
 const routes = [
   'index.html',
   'work/index.html',
@@ -13,6 +14,25 @@ const routes = [
 ];
 for (const route of routes) {
   const html = await readFile(path.join(root, route), 'utf8');
+  for (const script of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
+    if (script[1].includes('application/ld+json') || !script[2].trim())
+      continue;
+    assert.ok(
+      !script[2].includes('axe-core'),
+      'No development audit in inline scripts',
+    );
+    inlineScripts.add(script[2]);
+  }
+  assert.match(
+    html,
+    /clipboard/,
+    `${route}: email copy interaction is included`,
+  );
+  assert.match(
+    html,
+    /showModal/,
+    `${route}: mobile menu interaction is included`,
+  );
   assert.equal(
     (html.match(/<h1(?:\s|>)/g) || []).length,
     1,
@@ -54,7 +74,10 @@ for (const route of routes) {
   }
 }
 
-let javascriptGzipBytes = 0;
+let javascriptGzipBytes = [...inlineScripts].reduce(
+  (total, script) => total + gzipSync(script).length,
+  0,
+);
 for (const filename of await readdir(path.join(root, '_astro'))) {
   if (!filename.endsWith('.js')) continue;
   const content = await readFile(path.join(root, '_astro', filename));
