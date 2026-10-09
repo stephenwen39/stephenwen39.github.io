@@ -1,0 +1,65 @@
+---
+import { startingSteps } from '../data/audiences';
+import { posts } from '../data/content';
+---
+
+<section
+  class="starting-section"
+  id="starting-out"
+  aria-labelledby="starting-title"
+>
+  <div class="container section-space">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">給正在探索資料工程的你</p>
+        <h2 id="starting-title">
+          不必一次學完所有工具，
+          <br />
+          先做出一個完整的小作品。
+        </h2>
+      </div>
+    </div>
+    <p class="section-lead">
+      我的經歷從資料分析實習走向資料工程。這不是唯一的路；如果你還在找起點，可以把第一個練習拆成以下三步。
+    </p>
+    <ol class="learning-steps">
+      {startingSteps.map((step, i) => (
+        <li>
+          <span class="step-index">0{i + 1}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+          <p class="learning-output">
+            <strong>留下這個成果</strong>
+            {step.output}
+          </p>
+          <a
+            class="text-link"
+            href={step.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {step.resource}
+            <span class="sr-only">（英文，另開新分頁）</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="resource-note">
+      以上是入門練習建議，不是完整職涯路線或錄取保證。使用雲端服務前，請先確認官方的帳號需求與費用。
+    </p>
+    <div class="beginner-invitation">
+      <div>
+        <h3>還沒準備好轉職，也可以先聊聊。</h3>
+        <p>
+          你現在的背景、試過的練習，以及卡住的一個問題，就能成為對話的起點。
+        </p>
+      </div>
+      <div class="inline-links">
+        <a href="#coffee-chat">看看怎麼開啟對話</a>
+        <a href={posts[0].url} target="_blank" rel="noopener noreferrer">
+          讀我的學習轉折<span class="sr-only">（另開新分頁）</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

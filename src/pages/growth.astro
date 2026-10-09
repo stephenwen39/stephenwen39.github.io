@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import CoffeeChat from '../components/CoffeeChat.astro';
 import RelatedPages from '../components/RelatedPages.astro';
 import { profile, posts } from '../data/content';
+import { readingPaths, conversationPrompts } from '../data/audiences';
 ---
 
 <Base
@@ -23,18 +24,23 @@ import { profile, posts } from '../data/content';
           讓成長有跡可循。
         </h1>
         <p class="detail-lead">
-          我在 Threads 分享自我成長、職涯與科技。
+          如果你是從 Threads 來的，很高興在這裡遇見你。
           <br />
-          有實作裡的體會，也有還在探索的問題。
+          這裡有文章背後的我，也有一些可以一起慢慢想的問題。
         </p>
-        <a
-          class="button"
-          href={profile.socials[0].url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          到 Threads 和我交流<span class="sr-only">（另開新分頁）</span>
-        </a>
+        <div class="hero-buttons">
+          <a class="button" href="#start-reading">
+            找一篇適合現在的你
+          </a>
+          <a
+            class="button button-outline"
+            href={profile.socials[0].url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            回 Threads 和我交流<span class="sr-only">（另開新分頁）</span>
+          </a>
+        </div>
       </div>
       <aside class="growth-note">
         <span class="eyebrow">A NOTE TO MYSELF</span>
@@ -61,43 +67,27 @@ import { profile, posts } from '../data/content';
       <span>持續探索 · 公開學習</span>
     </div>
   </section>
-  <section class="topics-section">
+  <section
+    class="topics-section"
+    id="start-reading"
+    aria-labelledby="reading-title"
+  >
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">QUESTIONS WORTH ASKING</p>
-          <h2>最近，反覆回到的幾個問題。</h2>
+          <p class="eyebrow">不用從最新的一篇開始</p>
+          <h2 id="reading-title">你最近，正想著哪一個問題？</h2>
         </div>
       </div>
-      <div class="topics-grid">
-        <article>
-          <span>01 / 自驅力</span>
-          <h3>
-            你為什麼，
-            <br />
-            想做這件事？
-          </h3>
-          <p>探索自己的價值與動機。從「別人說應該」走向「這是我在乎的」。</p>
-        </article>
-        <article>
-          <span>02 / 職涯與成長</span>
-          <h3>
-            工作與生活，
-            <br />
-            能有自己的樣子嗎？
-          </h3>
-          <p>在熱愛、擅長、世界需要與報酬之間，找到適合自己的組合。</p>
-        </article>
-        <article>
-          <span>03 / 科技與人</span>
-          <h3>
-            工具變了，
-            <br />
-            我們如何跟著成長？
-          </h3>
-          <p>從資料工程、AI 與工作的改變，思考技術如何影響個人與社會。</p>
-        </article>
-      </div>
+      <nav class="reading-paths" aria-label="依你正在思考的問題選文">
+        {readingPaths.map((path, i) => (
+          <a href={path.href}>
+            <span>0{i + 1}</span>
+            <h3>{path.question}</h3>
+            <p>{path.note}</p>
+          </a>
+        ))}
+      </nav>
     </div>
   </section>
   <section class="container section-space" aria-labelledby="posts-heading">
@@ -113,6 +103,7 @@ import { profile, posts } from '../data/content';
         <a
           href={post.url}
           class="post-card"
+          id={`post-${post.id}`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -124,13 +115,14 @@ import { profile, posts } from '../data/content';
             </div>
             <h3>{post.title}</h3>
             <p>{post.summary}</p>
+            <p class="post-takeaway">
+              <strong>留一個問題給自己</strong>
+              {post.takeaway}
+            </p>
             <span class="post-source">
               到 Threads 讀原文<span class="sr-only">（另開新分頁）</span>
             </span>
           </div>
-          <span class="post-open" aria-hidden="true">
-            ↗
-          </span>
         </a>
       ))}
     </div>
@@ -147,8 +139,18 @@ import { profile, posts } from '../data/content';
         白天，我在資料系統裡釐清問題；工作之外，我在課輔現場學習陪伴。這些看似不同的經驗，讓我一次次回到「人怎麼學習、怎麼選擇、怎麼改變」的問題。
       </p>
       <p>
-        我把自己的觀察公開寫下來。也歡迎你帶著不同的經驗與觀點，一起讓討論更完整。
+        這裡記錄的是個人經驗與思考，不是適用每個人的標準答案。你不必先變得很厲害，才有值得分享的故事；也歡迎帶著不同的觀點來交流。
       </p>
+      <div class="experience-bridges">
+        <a href="/volunteer/">
+          <strong>關於陪伴，不只寫在文章裡。</strong>
+          <span>看看我從 2025 年開始的課輔志工經驗。</span>
+        </a>
+        <a href="/work/#experience">
+          <strong>關於探索，也走過自己的轉折。</strong>
+          <span>從均一的資料分析實習，到企業資料工程。</span>
+        </a>
+      </div>
       <div class="writing-links">
         <a
           href={profile.socials[0].url}
@@ -176,6 +178,7 @@ import { profile, posts } from '../data/content';
   <RelatedPages current="/growth/" />
   <CoffeeChat
     title="某個問題，也讓你想了很久嗎？"
-    text="如果一篇內容讓你想到自己的故事，歡迎到 Threads 留言，或約一場 Coffee Chat。"
+    text="想短短交流，歡迎先在 Threads 留言；如果想聊聊自己的故事，也可以寄信給我。不需要先有一個厲害的題目。"
+    prompts={conversationPrompts.growth}
   />
 </Base>

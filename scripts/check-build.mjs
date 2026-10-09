@@ -50,10 +50,16 @@ for (const route of routes) {
   for (const image of html.matchAll(/<img\b[^>]*>/g)) {
     assert.match(image[0], /\balt="[^"]*"/, `${route}: image alternative text`);
   }
-  for (const link of html.matchAll(/<a\b[^>]*href="([^"#]+)"[^>]*>/g)) {
+  for (const link of html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)) {
     const href = link[1];
-    if (href.startsWith('/') && !href.startsWith('//')) {
-      const pathname = href.split(/[?#]/)[0];
+    if (
+      href.startsWith('#') ||
+      (href.startsWith('/') && !href.startsWith('//'))
+    ) {
+      const currentPath =
+        route === 'index.html' ? '/' : `/${route.replace(/index\.html$/, '')}`;
+      const url = new URL(href, `https://local.test${currentPath}`);
+      const pathname = url.pathname;
       const target = path.join(
         root,
         pathname,
@@ -63,6 +69,13 @@ for (const route of routes) {
         (await stat(target)).isFile(),
         `${route}: internal link ${href}`,
       );
+      if (url.hash) {
+        const destination = await readFile(target, 'utf8');
+        assert.ok(
+          destination.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`),
+          `${route}: anchor ${href} exists`,
+        );
+      }
     }
     if (/\btarget="_blank"/.test(link[0])) {
       assert.match(

@@ -5,13 +5,14 @@ import CoffeeChat from '../components/CoffeeChat.astro';
 import CopyEmail from '../components/CopyEmail.astro';
 import portrait from '../assets/stephen.jpg';
 import volunteer from '../assets/volunteer.jpeg';
+import { visitorPaths } from '../data/audiences';
 ---
 
 <Base>
   <section class="home-hero container">
     <div class="hero-copy">
       <p class="eyebrow">
-        <span class="tiny-line"></span> HELLO, I’M STEPHEN.
+        <span class="tiny-line"></span> 嗨，我是展維
       </p>
       <h1>
         我打造資料系統，
@@ -29,10 +30,7 @@ import volunteer from '../assets/volunteer.jpeg';
       </p>
       <div class="hero-buttons">
         <a class="button" href="#explore">
-          選擇你想了解的我{' '}
-          <span class="down-mark" aria-hidden="true">
-            ↓
-          </span>
+          選擇你想了解的我
         </a>
         <CopyEmail variant="button-outline" />
       </div>
@@ -42,6 +40,14 @@ import volunteer from '../assets/volunteer.jpeg';
         <span>內容創作者</span>
         <span>終身學習者</span>
       </div>
+      <nav class="visitor-shortcuts" aria-label="依來訪目的快速前往">
+        <span>這次來，想了解⋯</span>
+        <div>
+          {visitorPaths.map((path) => (
+            <a href={path.href}>{path.label}</a>
+          ))}
+        </div>
+      </nav>
     </div>
     <div class="hero-portrait">
       <div class="portrait-frame">
@@ -106,9 +112,7 @@ import volunteer from '../assets/volunteer.jpeg';
               Senior Data
               Engineer。從資料架構、開發效率到雲端成本，把複雜問題變成可維護的系統。
             </p>
-            <span class="card-link">
-              了解我的資料工程工作 <span aria-hidden="true">↗</span>
-            </span>
+            <span class="card-link">了解我的資料工程工作</span>
           </div>
         </a>
         <a class="identity-card volunteer-card" href="/volunteer/">
@@ -138,9 +142,7 @@ import volunteer from '../assets/volunteer.jpeg';
               自 2025
               年起投入志工課輔。關心的不只是作業，也是在學習路上慢慢長出的信心。
             </p>
-            <span class="card-link">
-              了解我的志工經驗 <span aria-hidden="true">↗</span>
-            </span>
+            <span class="card-link">了解我的志工經驗</span>
           </div>
         </a>
         <a class="identity-card growth-card" href="/growth/">
@@ -171,9 +173,7 @@ import volunteer from '../assets/volunteer.jpeg';
               在 Threads
               分享自驅力、職涯與科技。把自己的探索寫下來，也從不同的聲音裡學習。
             </p>
-            <span class="card-link">
-              看看我的成長內容 <span aria-hidden="true">↗</span>
-            </span>
+            <span class="card-link">看看我的成長內容</span>
           </div>
         </a>
       </div>

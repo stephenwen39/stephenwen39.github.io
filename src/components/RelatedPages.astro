@@ -12,10 +12,7 @@ const { current } = Astro.props;
     {navigation
       .filter((n) => n.href !== current && n.href !== '/')
       .map((n) => (
-        <a href={n.href}>
-          {n.label}
-          <span aria-hidden="true">↗</span>
-        </a>
+        <a href={n.href}>{n.label}</a>
       ))}
   </div>
 </aside>

@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets';
+import talk from '../assets/dbt-talk.jpeg';
+import discussion from '../assets/dbt-discussion.jpeg';
+---
+
+<section
+  class="container section-space talk-section"
+  id="speaking"
+  aria-labelledby="talk-title"
+>
+  <p class="eyebrow">Taipei dbt Meetup · 技術分享</p>
+  <h2 id="talk-title">用 dbt，把資料架構的改變說清楚。</h2>
+  <p class="talk-intro">
+    從台上的架構與成效，到台下的交流，把實作經驗帶進資料工程社群。
+  </p>
+  <div class="talk-grid">
+    <div>
+      <figure class="talk-main-photo">
+        <Image
+          src={talk}
+          alt="Stephen 在 Taipei dbt Meetup 分享第二版資料架構，投影片呈現開發與部署效率改善及 dbt 自動化設計"
+          widths={[640, 1024, 1600]}
+          sizes="(max-width: 800px) 90vw, 720px"
+          format="webp"
+          loading="lazy"
+        />
+        <figcaption>
+          演講現場：以架構前後對照，說明第二版設計帶來的效益。
+        </figcaption>
+      </figure>
+      <div class="talk-caption-note">
+        <p>不只介紹工具，也說明改變了什麼。</p>
+        <span>
+          照片中的投影片記錄了開發 pipeline／部署 SQL 所需時間的實測改善。
+        </span>
+        <a class="text-link" href="#case-delivery">
+          回看 dbt 與 Databricks 的工作成果
+        </a>
+      </div>
+    </div>
+    <div class="talk-support">
+      <h3>這場分享談到的事</h3>
+      <dl class="talk-points">
+        <div>
+          <dt>01 · 開發與部署效率</dt>
+          <dd>
+            投影片呈現第二版架構的改善：開發 pipeline／部署
+            SQL，實測所需時間減少 95%。
+          </dd>
+        </div>
+        <div>
+          <dt>02 · 用自動化重新設計架構</dt>
+          <dd>
+            利用 dbt 的自動化能力重新設計資料管線，提升整體架構的自動化程度。
+          </dd>
+        </div>
+        <div>
+          <dt>03 · 讓上游相依關係更清楚</dt>
+          <dd>
+            分享 dbt 自動追溯上游相依關係的特性，並以架構圖呈現調整前後的差異。
+          </dd>
+        </div>
+      </dl>
+      <figure class="talk-secondary-photo">
+        <Image
+          src={discussion}
+          alt="Stephen 在 Taipei dbt Meetup 現場與參與者面對面交流"
+          widths={[480, 768, 1024]}
+          sizes="(max-width: 800px) 90vw, 460px"
+          format="webp"
+          loading="lazy"
+        />
+        <figcaption>台下交流：從投影片，回到面對面的討論。</figcaption>
+      </figure>
+    </div>
+  </div>
+  <p class="evidence-boundary">
+    以上重點依現場照片中可見的投影片整理；這裡呈現的是分享摘要，而非完整演講逐字稿。
+  </p>
+</section>

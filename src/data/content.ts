@@ -1,7 +1,7 @@
 export const profile = {
   name: 'Stephen Wen',
   email: 'chanwei394@gmail.com',
-  updated: '2026-10-07',
+  updated: '2026-10-09',
   socials: [
     { label: 'Threads', url: 'https://www.threads.com/@iam_wei_stephen' },
     {
@@ -20,6 +20,7 @@ export const navigation = [
 export const posts = [
   {
     id: 'self-drive',
+    takeaway: '如果先不問「我應該做什麼」，你真正想弄懂的是什麼？',
     theme: '自驅力與探索',
     date: '2024-09-12',
     title: '同一個人，是什麼讓學習的動力完全不同？',
@@ -29,6 +30,7 @@ export const posts = [
   },
   {
     id: 'career',
+    takeaway: '你希望從工作獲得的，和能在生活其他角色裡實現的，分別是什麼？',
     theme: '職涯與生活',
     date: '2026-10-07',
     title: '喜歡的事，一定要全部放進同一份工作嗎？',
@@ -38,6 +40,7 @@ export const posts = [
   },
   {
     id: 'public',
+    takeaway: '最近學到的哪一件小事，可能剛好幫得上另一個人？',
     theme: '公開學習',
     date: '2026-10-02',
     title: '個人品牌，是會跟著你複利的資產。',
@@ -50,6 +53,11 @@ export const posts = [
 export const engineeringCases = [
   {
     n: '01',
+    id: 'delivery',
+    problem: '資料部署需要 4 小時，交付流程有改善空間。',
+    contribution: '推動企業資料平台採用 dbt，並重建 Databricks 資料管線。',
+    discussion:
+      '團隊導入 dbt 時，如何界定先改哪些模型、怎麼衡量交付流程是否真的改善？',
     value: '95',
     unit: '%',
     label: '部署時間縮短',
@@ -62,6 +70,10 @@ export const engineeringCases = [
   },
   {
     n: '02',
+    id: 'logic',
+    problem: '複雜商業邏輯造成資料處理負擔，也增加後續維護難度。',
+    contribution: '與跨部門團隊協作，將複雜邏輯重構為可擴充、自動化的方案。',
+    discussion: '重構既有邏輯時，如何驗證新舊結果一致，再比較處理效能？',
     value: '98',
     unit: '%',
     label: '處理時間降低',
@@ -74,6 +86,11 @@ export const engineeringCases = [
   },
   {
     n: '03',
+    id: 'cost',
+    problem: 'GA4 資料延遲達 24 小時，BigQuery 支出也需要優化。',
+    contribution:
+      '優化 GA4 資料管線，並建立應用於 3 個網站的可重用 BigQuery 處理框架。',
+    discussion: '在成本與資料新鮮度之間，如何用業務需求決定值得投入的改善？',
     value: '80',
     unit: '%',
     label: 'BigQuery 成本降低',
@@ -86,6 +103,10 @@ export const engineeringCases = [
   },
   {
     n: '04',
+    id: 'pipelines',
+    problem: '400 個依時間觸發的 SQL 任務，帶來日常管理負擔。',
+    contribution: '使用 Dataform，將原有任務整併為 5 條事件驅動管線。',
+    discussion: '從時間排程改為事件觸發後，如何思考相依關係、失敗重跑與監控？',
     value: '400',
     unit: '→ 5',
     label: 'SQL 任務整併為事件管線',
