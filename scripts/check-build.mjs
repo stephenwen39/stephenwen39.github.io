@@ -8,7 +8,6 @@ const inlineScripts = new Set();
 const routes = [
   'index.html',
   'work/index.html',
-  'volunteer/index.html',
   'growth/index.html',
   '404.html',
 ];
@@ -103,6 +102,20 @@ for (const filename of await readdir(path.join(root, '_astro'))) {
 assert.ok(
   javascriptGzipBytes < 100 * 1024,
   'Client JavaScript exceeds the 100KB gzip budget',
+);
+const volunteerRedirect = await readFile(
+  path.join(root, 'volunteer/index.html'),
+  'utf8',
+);
+assert.match(
+  volunteerRedirect,
+  /http-equiv="refresh"/i,
+  'Old volunteer route redirects',
+);
+assert.match(
+  volunteerRedirect,
+  /\/growth\/#experience/,
+  'Old volunteer route retains access to the experience section',
 );
 await stat(path.join(root, 'robots.txt'));
 await stat(path.join(root, 'sitemap-index.xml'));

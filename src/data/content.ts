@@ -14,8 +14,7 @@ export const profile = {
 export const navigation = [
   { href: '/', label: '首頁' },
   { href: '/work/', label: '資料工程' },
-  { href: '/volunteer/', label: '志工教育' },
-  { href: '/growth/', label: '成長內容' },
+  { href: '/growth/', label: '自我成長教練' },
 ];
 export const posts = [
   {

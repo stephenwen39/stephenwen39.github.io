@@ -1,6 +1,6 @@
-# Stephen Wen 個人網站
+# 展維 Stephen Wen 個人網站
 
-依據上一層的 `spec.md` 製作，採用 Astro、TypeScript 與自託管字體，輸出靜態網站。
+以 Astro、TypeScript、自託管字體與靜態輸出建立。現行內容規格為上一層的 `spec.md` v2.0（2026-10-09）。
 
 ## 開發與建置
 
@@ -12,36 +12,25 @@ npm run check:build
 npm run preview
 ```
 
-首頁 `/`、資料工程 `/work/`、志工教育 `/volunteer/`、成長內容 `/growth/`，另有 404 頁、robots.txt 與 sitemap。
+## 頁面與維護
 
-## 修改內容
+- `/`：資料工程師 × 自我成長教練，含直線分岔履歷與兩個專頁入口。
+- `/work/`：dbt 演講、平台遷移、從零建構、優化與實際成果。
+- `/growth/`：教練定位、志工與 DreamMore 經驗、自驅力故事、Threads 觀點。
+- `/volunteer/`：相容舊連結，導向 `/growth/#experience`。
+- `src/components/CareerPath.astro`：水平方向的履歷與兩條平行分岔；手機可左右捲動。
+- `src/data/content.ts`：聯絡方式、社群與精選貼文來源。
+- `src/styles/focus.css`：雙主線版本的頁面樣式；共享基礎樣式在 `global.css`。
+- `src/assets/`：使用者提供的照片，建置時產生響應式 WebP。
 
-- `src/data/content.ts`：聯絡信箱、外部平台、職涯經歷、工程成果、精選 Threads 貼文與更新日期。
-- `src/data/audiences.ts`：四種訪客捷徑、能力對照、入門資源、文章閱讀路徑與交流提示。
-- `src/pages/`：四個頁面的文字與結構。
-- `src/styles/`：全站與詳情頁樣式。
-- `src/assets/`：使用者提供的個人照與志工照，由 Astro 自動產生 WebP 與響應式圖片。
-- `astro.config.mjs`：部署網址。改用其他網域時，可設定 `SITE_URL` 後重新建置。
+聯絡按鈕複製 `chanwei394@gmail.com`，保留 Clipboard API、相容複製與手動選取的備援。網站沒有資料收集表單與追蹤碼。
 
-Coffee Chat 使用 Clipboard API，失敗時嘗試相容複製，再提供可手動選取的 Email。網站不含追蹤碼或資料收集表單。所有外部連結均另開分頁並標註。
+`npm run check:build` 驗證主頁語意與中繼資料、內部連結與錨點、圖片替代文字、開發檢查工具未進入正式輸出，以及舊志工頁導向。
 
-## 驗證
+## 內容依據
 
-- 以實際瀏覽器檢查四個主要頁面在 320、390、768、1024、1440px 的版面、圖片與標題。
-- Coffee Chat 已實際複製後貼上，確認內容為 `chanwei394@gmail.com`。
-- 行動導覽已檢查開啟、頁面切換、Escape 關閉與焦點返回。
-- 開發時在網址加上 `?audit=1`，可執行 axe-core 的 WCAG A／AA 檢查；此工具不在正式頁面載入。
-- 尚未做 iOS 真機與各瀏覽器版本矩陣測試，亦未宣稱已達實測 Core Web Vitals 指標。
+工作與學歷來自使用者提供的 LinkedIn PDF；志工、教練定位與演講敘述依使用者確認。Threads 觀點保留原文連結。量化成果註明屬於大聯大任職期間。
 
-## 內容選擇與待補素材
+原始 PDF 與照片保留在上一層，沒有放入公開目錄。沿用 Sites 的原網站與私人可見範圍。
 
-- 使用繁體中文，首頁摘要與三個詳情頁分開。
-- Meetup 區使用使用者補充的 `dbt照片1.jpeg`、`dbt照片2.jpeg`，呈現演講與交流現場。內容依照片上可讀的投影片整理，不推測正式講題、活動日期或未公開的架構細節。
-- Threads 精選使用對話中已查證的公開原文，標題與摘要為網站編輯版；可在內容檔更換。
-- 社群追蹤數未顯示，以免過期。現在的可信訊號為可追溯文章與真實工作／志工經驗。
-- 分享預覽使用既有個人照，不生成新的人像。可日後換成專屬社群分享圖。
-- 發布流程以 Sites 私人預覽為預設；公開分享與自訂網域需另行設定。
-
-原始 PDF 與照片仍保存在上一層，不包含於網站公開目錄。
-
-本次四種受眾的角色推演、實作改善與待補證據記錄在 `audience-review.md`。
+`audience-review.md` 是前一版四受眾分析的歷史紀錄；現行資訊架構以 `spec.md` v2.0 為準。

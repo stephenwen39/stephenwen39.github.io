@@ -1,258 +1,201 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import CoffeeChat from '../components/CoffeeChat.astro';
 import CopyEmail from '../components/CopyEmail.astro';
-import RelatedPages from '../components/RelatedPages.astro';
-import StartingOut from '../components/StartingOut.astro';
-import Speaking from '../components/Speaking.astro';
-import { skillEvidence, conversationPrompts } from '../data/audiences';
-import {
-  profile,
-  engineeringCases as cases,
-  experiences,
-} from '../data/content';
+import CoffeeChat from '../components/CoffeeChat.astro';
+import talk from '../assets/dbt-talk.jpeg';
+import discussion from '../assets/dbt-discussion.jpeg';
+import { profile } from '../data/content';
+const linkedin = profile.socials.find(
+  (social) => social.label === 'LinkedIn',
+)!.url;
 ---
 
 <Base
-  title="資料工程與職涯 — Stephen Wen"
-  description="Stephen Wen，TSMC Senior Data Engineer。探索 dbt、Databricks、GCP 與 Spark 的量化成果、工作經歷及 Taipei dbt Meetup 分享。"
+  title="資料工程 — 展維 Stephen Wen"
+  description="現任台積電資深資料工程師。從商業需求出發，專注資料平台遷移、從零建構與效能優化；以 dbt、Databricks 與 BigQuery 的實作成果說話。"
   theme="work"
 >
-  <section class="work-hero" id="profile">
-    <div class="container">
-      <a href="/" class="back-link">
-        首頁 / 資料工程
-      </a>
-      <div class="work-hero-grid">
-        <div>
-          <p class="eyebrow">01 / DATA ENGINEERING</p>
-          <h1>
-            讓資料跑得更好，
-            <br />
-            也讓團隊走得更遠。
-          </h1>
-          <p class="detail-lead">
-            我是 Stephen，現任 TSMC Senior Data Engineer。
-            <br />從 0 到 1
-            建立資料系統，也把既有架構做得更快、更省、更容易交付。
-          </p>
-          <div class="hero-buttons">
-            <CopyEmail label="聯絡我聊職務或技術" variant="button-lime" />
-            <a
-              class="button button-on-dark"
-              href={profile.socials[1].url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              查看 LinkedIn<span class="sr-only">（另開新分頁）</span>
-            </a>
-          </div>
-        </div>
-        <aside class="professional-snapshot" aria-label="專業速覽">
-          <p class="eyebrow">30 秒認識我的專業背景</p>
-          <dl>
-            <div>
-              <dt>現在</dt>
-              <dd>
-                TSMC
-                <br />
-                <span>Senior Data Engineer · 2026.05 起</span>
-              </dd>
-            </div>
-            <div>
-              <dt>過去</dt>
-              <dd>
-                WPG Holdings 大聯大
-                <br />
-                <span>Data Engineer · 2023.02–2026.03</span>
-              </dd>
-            </div>
-            <div>
-              <dt>認證</dt>
-              <dd>
-                Google Cloud
-                <br />
-                <span>Professional Data Engineer</span>
-              </dd>
-            </div>
-          </dl>
-          <p class="snapshot-note">
-            公開成果主要來自大聯大任職期間；不揭露現職內部系統資訊。
-          </p>
-        </aside>
+  <section class="container feature-hero" id="profile">
+    <figure class="feature-photo" id="speaking">
+      <Image
+        src={talk}
+        alt="展維在 Taipei dbt meetup 分享企業資料平台架構與遷移成果"
+        widths={[480, 800, 1200, 1600]}
+        sizes="(max-width: 800px) 100vw, 50vw"
+        format="webp"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <figcaption>
+        在 Taipei dbt meetup 講述企業資料平台遷移的成功案例
+      </figcaption>
+    </figure>
+    <div class="feature-copy">
+      <p class="eyebrow">資料工程</p>
+      <h1>
+        從商業問題出發，
+        <br />
+        把技術解法做到位。
+      </h1>
+      <p class="role-line">現任台積電資深資料工程師</p>
+      <p class="feature-description">
+        我擅長先看懂商業需求，再端出技術解決方案。從平台遷移、從零建構到持續優化，讓資料真正支持團隊的工作。
+      </p>
+      <div class="action-row">
+        <CopyEmail label="寄信給我聊聊" />
+        <a
+          class="plain-link"
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          查看 LinkedIn<span class="sr-only">（另開新分頁）</span>
+        </a>
       </div>
+      <p class="action-hint">點擊按鈕複製電子信箱。</p>
     </div>
   </section>
-  <nav class="page-sections container" aria-label="資料工程頁快速導覽">
-    <a href="#capabilities">專長與適配</a>
-    <a href="#impact-title">實作成果</a>
-    <a href="#experience">職涯經歷</a>
-    <a href="#speaking">dbt 演講</a>
-    <a href="#starting-out">轉職入門</a>
-    <a href="#coffee-chat">聯絡與交流</a>
-  </nav>
+
   <section
-    class="container capability-section"
+    class="capability-section"
     id="capabilities"
     aria-labelledby="capability-title"
   >
-    <h2 id="capability-title">如果你的團隊正在解決這些問題。</h2>
-    <div class="capability-grid">
-      {skillEvidence.map((skill) => (
-        <a href={skill.href}>
-          <h3>{skill.title}</h3>
-          <p class="capability-tools">{skill.tools}</p>
-          <p>{skill.proof}</p>
-          <span>查看對應實作</span>
-        </a>
-      ))}
-    </div>
-  </section>
-  <section class="container section-space" aria-labelledby="impact-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">PROVEN IN PRACTICE</p>
-        <h2 id="impact-title">讓成果，替實作說話。</h2>
-      </div>
-      <p class="section-aside">
-        以下成果來自大聯大任職期間，
-        <br />
-        依公開 LinkedIn 資料整理。
-      </p>
-    </div>
-    <div class="case-grid">
-      {cases.map((c) => (
-        <article class="case-card" id={`case-${c.id}`}>
-          <div class="case-number">{c.n}</div>
-          <p class="case-metric">
-            {c.value}
-            <span>{c.unit}</span>
-          </p>
-          <p class="case-label">{c.label}</p>
-          <span class="case-from">{c.from}</span>
-          <h3>{c.title}</h3>
-          <p class="case-description">{c.text}</p>
-          <div class="tech-tags">
-            {c.tags.map((t) => (
-              <span>{t}</span>
-            ))}
-          </div>
-          <details>
-            <summary>
-              看看做法與脈絡<span aria-hidden="true">＋</span>
-            </summary>
-            <dl class="case-context">
-              <div>
-                <dt>當時的問題</dt>
-                <dd>{c.problem}</dd>
-              </div>
-              <div>
-                <dt>我的投入</dt>
-                <dd>{c.contribution}</dd>
-              </div>
-              <div>
-                <dt>成果口徑</dt>
-                <dd>{c.detail}</dd>
-              </div>
-            </dl>
-            <div class="case-discussion">
-              <strong>可以一起討論</strong>
-              <p>{c.discussion}</p>
-            </div>
-          </details>
-          {c.id === 'delivery' && (
-            <a class="text-link" href="#speaking">
-              看 dbt Meetup 演講現場
-            </a>
-          )}
-        </article>
-      ))}
-    </div>
-    <p class="evidence-boundary">
-      案例依公開 LinkedIn
-      經歷整理，未提供內部架構、原始碼或測試基準；交流問題僅供討論，不代表未公開的實作細節。
-    </p>
-  </section>
-  <section class="experience-section" id="experience">
-    <div class="container split-section">
+    <div class="container">
       <div class="section-intro">
-        <p class="eyebrow">THE JOURNEY</p>
-        <h2>
-          一路累積的，
+        <p class="eyebrow">從建置到演進，都有實戰經驗</p>
+        <h2 id="capability-title">
+          把資料工程做好，
           <br />
-          不只是工具。
+          從這三件事開始。
         </h2>
+      </div>
+      <div class="expertise-grid">
+        <article id="case-delivery">
+          <span class="expertise-number">01</span>
+          <h3>遷移既有平台</h3>
+          <p>
+            在大聯大導入 dbt、重建 Databricks
+            管線，讓架構轉換也成為團隊交付流程的升級。
+          </p>
+          <div class="expertise-proof">
+            <strong>
+              4 小時 <span>→</span> 10 分鐘
+            </strong>
+            <span>資料部署時間</span>
+          </div>
+          <p class="tool-note">dbt · Databricks</p>
+        </article>
+        <article id="case-build">
+          <span class="expertise-number">02</span>
+          <h3>從零建構</h3>
+          <p>
+            把需求整理成可重用的資料流程。建立 GA4 與 BigQuery
+            處理框架，讓成果能在不同網站持續使用。
+          </p>
+          <div class="expertise-proof">
+            <strong>3 個網站</strong>
+            <span>共用同一套資料處理框架</span>
+          </div>
+          <p class="tool-note">GA4 · BigQuery · SQL</p>
+        </article>
+        <article id="case-cost">
+          <span class="expertise-number">03</span>
+          <h3>優化效能與成本</h3>
+          <p>
+            找出真正的瓶頸，同時改善成本與資料時效。讓 GA4 資料延遲從 24
+            小時降至 1 小時內。
+          </p>
+          <div class="expertise-proof">
+            <strong>
+              80<span>%</span>
+            </strong>
+            <span>BigQuery 成本降低</span>
+          </div>
+          <p class="tool-note">BigQuery · Spark · Dataform</p>
+        </article>
+      </div>
+      <div class="compact-results" id="impact-title">
         <p>
-          從教育科技到企業資料平台，持續練習把技術限制、商業需求與人的工作方式放在一起思考。
+          <strong>98%</strong>
+          <span>重構商業邏輯後，處理時間降低</span>
+        </p>
+        <p id="case-pipelines">
+          <strong>400 → 5</strong>
+          <span>SQL 任務整併為事件驅動管線</span>
+        </p>
+        <p>
+          <strong>90%</strong>
+          <span>管線管理時間降低</span>
         </p>
       </div>
-      <div class="timeline">
-        {experiences.map((experience) => (
-          <article>
-            <div class="timeline-meta">
-              <span>{experience.period}</span>
-              {experience.current && <span class="current-label">現職</span>}
-            </div>
-            <h3>{experience.role}</h3>
-            <p class="organization">{experience.organization}</p>
-            {experience.location && <p>{experience.location}</p>}
-            {experience.highlights.length > 0 && (
-              <ul>
-                {experience.highlights.map((highlight) => (
-                  <li>{highlight}</li>
-                ))}
-              </ul>
-            )}
-          </article>
-        ))}
-      </div>
+      <p class="source-note">以上為大聯大任職期間的專案成果。</p>
     </div>
   </section>
-  <StartingOut />
-  <Speaking />
-  <section class="education-section">
-    <div class="container">
-      <div class="section-heading">
+
+  <section class="container work-perspective section-pad">
+    <div>
+      <p class="eyebrow">技術之外，是理解與溝通</p>
+      <h2>
+        知道為什麼做，
+        <br />
+        才能把系統做好。
+      </h2>
+      <p>
+        我在意的不只是一條管線能不能執行，而是它解決了誰的問題、團隊能否接手，以及改善是否真的帶來效益。
+      </p>
+      <figure class="discussion-photo">
+        <Image
+          src={discussion}
+          alt="展維在 Taipei dbt meetup 與參與者面對面交流資料工程經驗"
+          widths={[480, 800, 1100]}
+          sizes="(max-width: 800px) 90vw, 45vw"
+          format="webp"
+          loading="lazy"
+        />
+        <figcaption>把實作經驗帶進社群，也在交流中讓思考更完整。</figcaption>
+      </figure>
+    </div>
+    <div class="career-summary" id="experience">
+      <h3>累積經驗的地方</h3>
+      <dl>
         <div>
-          <p class="eyebrow">FOUNDATIONS</p>
-          <h2>學習，是持續發生的事。</h2>
+          <dt>
+            <span>2026.05 — 至今</span>台積電
+          </dt>
+          <dd>資深資料工程師</dd>
         </div>
-      </div>
-      <div class="education-grid">
-        <article class="credential">
-          <span class="eyebrow">GOOGLE CLOUD CERTIFIED</span>
-          <h3>
-            Professional
+        <div>
+          <dt>
+            <span>2023.02 — 2026.03</span>WPG Holdings 大聯大
+          </dt>
+          <dd>
+            資料工程師
             <br />
-            Data Engineer
-          </h3>
-          <p>2026.01 核發 · 2028.01 到期</p>
-        </article>
-        <div class="education-list">
-          <article>
-            <span>2020 — 2022</span>
-            <h3>國立成功大學</h3>
-            <p>資訊管理碩士</p>
-            <p class="education-note">
-              碩士論文獲 Fubon Life Management Doctor and Master Thesis Award
-              Honorable Mention，並入選 Chinese Institute of Industrial
-              Engineers Conference。
-            </p>
-          </article>
-          <article>
-            <span>2016 — 2020</span>
-            <h3>世新大學</h3>
-            <p>資訊傳播學系學士</p>
-          </article>
+            <small>平台遷移、流程重構與雲端成本優化。</small>
+          </dd>
         </div>
+        <div>
+          <dt>
+            <span>2022.02 — 2022.09</span>均一平台教育基金會
+          </dt>
+          <dd>
+            實習資料分析師
+            <br />
+            <small>優化 20 條 SQL 管線，並從零設計資料敘事與視覺化課程。</small>
+          </dd>
+        </div>
+      </dl>
+      <div class="qualification">
+        <p>國立成功大學 · 資訊管理碩士</p>
+        <p>Google Cloud 專業資料工程師認證</p>
+        <span>2026.01 核發 · 2028.01 到期</span>
       </div>
     </div>
   </section>
-  <RelatedPages current="/work/" />
   <CoffeeChat
-    title="從你正在處理的問題，開始聊。"
-    text="職務合作、轉職探索，或 dbt、資料管線與雲端成本。選一個你最在意的題目就好。"
-    prompts={conversationPrompts.work}
-    label="複製 Email，開啟對話"
+    title="你的資料平台，現在卡在哪裡？"
+    text="平台遷移、建置規劃，或成本與效能瓶頸。歡迎找我交換想法，也歡迎聊聊職務合作。"
   />
 </Base>

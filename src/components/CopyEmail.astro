@@ -4,14 +4,14 @@ interface Props {
   label?: string;
   variant?: string;
 }
-const { label = 'Coffee Chat', variant = '' } = Astro.props;
+const { label = '寄信給我聊聊', variant = '' } = Astro.props;
 ---
 
 <button
   class:list={['button', 'copy-email', variant]}
   type="button"
   data-copy-email={profile.email}
-  aria-label={`${label}，複製 Email`}
+  aria-label={`${label}，複製電子信箱`}
 >
   <svg
     width="18"

@@ -1,184 +1,216 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import CoffeeChat from '../components/CoffeeChat.astro';
-import RelatedPages from '../components/RelatedPages.astro';
-import { profile, posts } from '../data/content';
-import { readingPaths, conversationPrompts } from '../data/audiences';
+import CopyEmail from '../components/CopyEmail.astro';
+import volunteer from '../assets/volunteer.jpeg';
+import { posts, profile } from '../data/content';
+const threads = profile.socials.find(
+  (social) => social.label === 'Threads',
+)!.url;
+const beliefs = [
+  {
+    title: '自驅力，從找到自己的理由開始。',
+    text: '先理解自己在乎什麼，再決定要往哪裡走。探索與嘗試，能讓學習從「我應該」變成「我想要」。',
+    post: posts[0],
+  },
+  {
+    title: '人生的可能，不必擠進同一份工作。',
+    text: '熱愛、擅長與收入，不一定都要由同一個角色滿足。找到適合自己的組合，也是一種踏實的前進。',
+    post: posts[1],
+  },
+  {
+    title: '把學到的分享出去，也讓自己持續成長。',
+    text: '記錄走過的路、踩過的坑。在表達中整理自己，也讓經驗成為別人往前走的線索。',
+    post: posts[2],
+  },
+];
 ---
 
 <Base
-  title="自媒體與自我成長 — Stephen Wen"
-  description="在 Threads 和 Stephen Wen 一起思考自我成長、職涯發展與科技。從真實的工程、教育與生活經驗出發，持續探索，公開學習。"
-  theme="growth"
+  title="自我成長教練 — 展維 Stephen Wen"
+  description="從志工課輔、Threads 自我成長書寫，到均一 DreamMore 學生生涯陪伴。展維陪你釐清學涯與職涯選擇，找到自己的自驅力。"
+  theme="coach"
 >
-  <section class="growth-hero container">
-    <a href="/" class="back-link">
-      首頁 / 成長內容
-    </a>
-    <div class="growth-heading">
-      <div>
-        <p class="eyebrow">03 / THINKING OUT LOUD</p>
-        <h1>
-          把思考寫下來，
-          <br />
-          讓成長有跡可循。
-        </h1>
-        <p class="detail-lead">
-          如果你是從 Threads 來的，很高興在這裡遇見你。
-          <br />
-          這裡有文章背後的我，也有一些可以一起慢慢想的問題。
+  <section class="container feature-hero coach-hero">
+    <figure class="feature-photo">
+      <Image
+        src={volunteer}
+        alt="社區志工課輔現場，學生坐在座位上學習與完成作業"
+        widths={[480, 800, 1200, 1600]}
+        sizes="(max-width: 800px) 100vw, 50vw"
+        format="webp"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <figcaption>
+        我用教練心態陪伴學生思考問題本質，協助對方做出適合他的決定
+      </figcaption>
+    </figure>
+    <div class="feature-copy">
+      <p class="eyebrow">自我成長教練</p>
+      <h1>
+        我讓每個人
+        <br />
+        成為更好的自己。
+      </h1>
+      <p class="feature-description">
+        我長期在 Threads
+        分享自我成長，也在社區中心擔任志工課輔老師。現在，我是均一 DreamMore
+        計畫的學生生涯教練，陪伴學生釐清問題、探索方向，做出適合自己的選擇。
+      </p>
+      <div class="action-row">
+        <CopyEmail label="聊聊你的困難" />
+        <a
+          class="plain-link"
+          href={threads}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          在 Threads 認識我<span class="sr-only">（另開新分頁）</span>
+        </a>
+      </div>
+      <p class="action-hint">點擊複製信箱，寫下你正在面對的選擇。</p>
+    </div>
+  </section>
+
+  <section class="coaching-topics" aria-labelledby="topics-title">
+    <div class="container">
+      <div class="section-intro">
+        <p class="eyebrow">從你的處境開始</p>
+        <h2 id="topics-title">有些問題，值得一起想清楚。</h2>
+      </div>
+      <div class="topic-columns">
+        <article>
+          <span>01</span>
+          <h3>學涯方向</h3>
+          <p>不知道為什麼而學，也不確定升學與學習的選擇，哪一個適合自己。</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>職涯選擇</h3>
+          <p>正在考慮下一份工作或轉換跑道，想分清楚期待、能力與現實條件。</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>找回自驅力</h3>
+          <p>知道自己應該行動，卻一直提不起勁，想找到真正願意出發的理由。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="container coaching-experience section-pad"
+    id="experience"
+    aria-labelledby="experience-title"
+  >
+    <div class="section-intro">
+      <p class="eyebrow">持續投入的陪伴</p>
+      <h2 id="experience-title">
+        我的經驗，
+        <br />
+        來自真實的相處。
+      </h2>
+      <p class="section-description">
+        在課輔現場傾聽，在生涯對話中提問，也在持續書寫中整理自己的成長。
+      </p>
+    </div>
+    <div class="experience-list">
+      <article>
+        <p class="experience-date">2026.09 — 至今</p>
+        <h3>學生生涯教練</h3>
+        <p class="experience-org">均一平台教育基金會 · DreamMore 計畫</p>
+        <p>陪伴學生探索生涯，釐清眼前的問題與選擇，練習為自己做決定。</p>
+      </article>
+      <article>
+        <p class="experience-date">2025.01 — 至今</p>
+        <h3>社區志工課輔老師</h3>
+        <p class="experience-org">中華民國我願意全人關懷協會</p>
+        <p>
+          陪伴國小至高中學生準備考試、完成課業，也一起面對學習動力與成長的困難。
         </p>
-        <div class="hero-buttons">
-          <a class="button" href="#start-reading">
-            找一篇適合現在的你
-          </a>
+      </article>
+      <article>
+        <p class="experience-date">持續書寫與交流</p>
+        <h3>Threads 自我成長帳號經營者</h3>
+        <p>
+          分享自驅力、職涯與公開學習的思考。把自己的探索寫下來，也聽見不同的人如何面對人生。
+        </p>
+        <a
+          class="plain-link"
+          href={threads}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          看看我的日常思考<span class="sr-only">（另開新分頁）</span>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section class="origin-section" id="my-story" aria-labelledby="origin-title">
+    <div class="container origin-grid">
+      <div>
+        <p class="eyebrow">我也曾經找不到方向</p>
+        <h2 id="origin-title">
+          自驅力，
+          <br />
+          是慢慢長出來的。
+        </h2>
+        <p class="origin-note">
+          從「為什麼要學」
+          <br />
+          到「我想成為什麼樣的人」
+        </p>
+      </div>
+      <div class="origin-prose">
+        <p>
+          我曾經找不到讀書的動力，也不知道課本裡的知識和自己有什麼關係。參與活動、聽演講、和不同的人對話之後，我才慢慢開始問自己：我在乎什麼，想成為什麼樣的人？
+        </p>
+        <p>
+          那份探索，讓我主動攻讀資管碩士、學習資料分析，也一路走進資料工程。我開始相信，成長需要一個屬於自己的、願意出發的理由。
+        </p>
+        <p class="origin-emphasis">
+          我曾經這樣長出自驅力，也希望陪你長出自己的。透過傾聽與提問，把問題看清楚，找到你願意踏出的下一步。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="container section-pad"
+    id="start-reading"
+    aria-labelledby="beliefs-title"
+  >
+    <div class="section-intro">
+      <p class="eyebrow">陪伴裡，我相信的事</p>
+      <h2 id="beliefs-title">成長，要能回到你自己。</h2>
+    </div>
+    <div class="belief-list">
+      {beliefs.map((belief, index) => (
+        <article id={`post-${belief.post.id}`}>
+          <span class="belief-index">0{index + 1}</span>
+          <div>
+            <h3>{belief.title}</h3>
+            <p>{belief.text}</p>
+          </div>
           <a
-            class="button button-outline"
-            href={profile.socials[0].url}
+            class="plain-link"
+            href={belief.post.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`在 Threads 讀原文：${belief.post.title}（另開新分頁）`}
           >
-            回 Threads 和我交流<span class="sr-only">（另開新分頁）</span>
+            在 Threads 讀原文
           </a>
-        </div>
-      </div>
-      <aside class="growth-note">
-        <span class="eyebrow">A NOTE TO MYSELF</span>
-        <blockquote>
-          當你不再想著成為別人，
-          <br />
-          而是成為自己的時候，
-          <br />
-          你就會得到真正的自由。
-        </blockquote>
-        <span class="note-signature">Stephen</span>
-        <a
-          href="https://www.threads.com/@iam_wei_stephen/post/DdvdwcRn5j5"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Threads · 2026.09.26<span class="sr-only">（另開新分頁）</span>
-        </a>
-      </aside>
-    </div>
-    <div class="growth-proof">
-      <span class="threads-handle">@iam_wei_stephen</span>
-      <span>從資料工程與教育現場，延伸到生活裡的問題。</span>
-      <span>持續探索 · 公開學習</span>
-    </div>
-  </section>
-  <section
-    class="topics-section"
-    id="start-reading"
-    aria-labelledby="reading-title"
-  >
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">不用從最新的一篇開始</p>
-          <h2 id="reading-title">你最近，正想著哪一個問題？</h2>
-        </div>
-      </div>
-      <nav class="reading-paths" aria-label="依你正在思考的問題選文">
-        {readingPaths.map((path, i) => (
-          <a href={path.href}>
-            <span>0{i + 1}</span>
-            <h3>{path.question}</h3>
-            <p>{path.note}</p>
-          </a>
-        ))}
-      </nav>
-    </div>
-  </section>
-  <section class="container section-space" aria-labelledby="posts-heading">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">START READING HERE</p>
-        <h2 id="posts-heading">從這幾篇，開始一段對話。</h2>
-      </div>
-      <span class="section-aside">我的 Threads 精選</span>
-    </div>
-    <div class="post-list">
-      {posts.map((post, i) => (
-        <a
-          href={post.url}
-          class="post-card"
-          id={`post-${post.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="post-number">0{i + 1}</span>
-          <div>
-            <div class="post-meta">
-              <span>{post.theme}</span>
-              <time datetime={post.date}>{post.date.replaceAll('-', '.')}</time>
-            </div>
-            <h3>{post.title}</h3>
-            <p>{post.summary}</p>
-            <p class="post-takeaway">
-              <strong>留一個問題給自己</strong>
-              {post.takeaway}
-            </p>
-            <span class="post-source">
-              到 Threads 讀原文<span class="sr-only">（另開新分頁）</span>
-            </span>
-          </div>
-        </a>
+        </article>
       ))}
     </div>
   </section>
-  <section class="growth-about container">
-    <p class="eyebrow">BEHIND THE WORDS</p>
-    <div>
-      <h2>
-        寫下來的，
-        <br />
-        也是我正在練習的。
-      </h2>
-      <p>
-        白天，我在資料系統裡釐清問題；工作之外，我在課輔現場學習陪伴。這些看似不同的經驗，讓我一次次回到「人怎麼學習、怎麼選擇、怎麼改變」的問題。
-      </p>
-      <p>
-        這裡記錄的是個人經驗與思考，不是適用每個人的標準答案。你不必先變得很厲害，才有值得分享的故事；也歡迎帶著不同的觀點來交流。
-      </p>
-      <div class="experience-bridges">
-        <a href="/volunteer/">
-          <strong>關於陪伴，不只寫在文章裡。</strong>
-          <span>看看我從 2025 年開始的課輔志工經驗。</span>
-        </a>
-        <a href="/work/#experience">
-          <strong>關於探索，也走過自己的轉折。</strong>
-          <span>從均一的資料分析實習，到企業資料工程。</span>
-        </a>
-      </div>
-      <div class="writing-links">
-        <a
-          href={profile.socials[0].url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Threads
-          <span>
-            日常思考與對話<span class="sr-only">（另開新分頁）</span>
-          </span>
-        </a>
-        <a
-          href={profile.socials[2].url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Substack
-          <span>
-            資料敘事與長篇分享<span class="sr-only">（另開新分頁）</span>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
-  <RelatedPages current="/growth/" />
   <CoffeeChat
-    title="某個問題，也讓你想了很久嗎？"
-    text="想短短交流，歡迎先在 Threads 留言；如果想聊聊自己的故事，也可以寄信給我。不需要先有一個厲害的題目。"
-    prompts={conversationPrompts.growth}
+    title="先從你卡住的地方說起。"
+    text="你正在面對什麼、試過哪些方法、希望改變什麼？帶著這些線索來，我們一起把下一步想清楚。"
+    label="聊聊你的下一步"
   />
 </Base>

@@ -3,191 +3,111 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import CoffeeChat from '../components/CoffeeChat.astro';
 import CopyEmail from '../components/CopyEmail.astro';
+import CareerPath from '../components/CareerPath.astro';
 import portrait from '../assets/stephen.jpg';
-import volunteer from '../assets/volunteer.jpeg';
-import { visitorPaths } from '../data/audiences';
 ---
 
 <Base>
-  <section class="home-hero container">
-    <div class="hero-copy">
-      <p class="eyebrow">
-        <span class="tiny-line"></span> 嗨，我是展維
-      </p>
-      <h1>
-        我對兩件事特別著迷：
-        <br />
-        複雜的系統，與<span class="highlight-word">複雜的人<span class="highlight-stroke" aria-hidden="true"></span></span>。
-      </h1>
-      <p class="hero-description">
-        我的三個身份：tsmc 資料工程師、Threads 自我成長帳號經營者、志工課輔老師
-      </p>
-      <div class="hero-buttons">
-        <a class="button" href="#explore">
-          選擇你想了解的我
-        </a>
-        <CopyEmail variant="button-outline" />
-      </div>
-      <div class="identity-tags" role="group" aria-label="我的四個身份">
-        <span>資料工程師</span>
-        <span>教育志工</span>
-        <span>內容創作者</span>
-        <span>終身學習者</span>
-      </div>
-      <nav class="visitor-shortcuts" aria-label="依來訪目的快速前往">
-        <span>這次來，想了解⋯</span>
-        <div>
-          {visitorPaths.map((path) => (
-            <a href={path.href}>{path.label}</a>
-          ))}
-        </div>
-      </nav>
-    </div>
-    <div class="hero-portrait">
-      <div class="portrait-frame">
-        <Image
-          src={portrait}
-          alt="Stephen Wen 的個人照片"
-          widths={[480, 768, 1024]}
-          sizes="(max-width: 800px) 85vw, 420px"
-          format="webp"
-          loading="eager"
-          fetchpriority="high"
-        />
-      </div>
-      <div class="portrait-caption">
-        <span>Stephen Wen</span>
-        <span>TAIPEI, TAIWAN</span>
-      </div>
-      <span class="portrait-note">Stay curious.</span>
-      <span class="portrait-corner" aria-hidden="true">
-        ＋
-      </span>
-    </div>
-  </section>
-  <section class="explore-section" id="explore" aria-labelledby="explore-title">
+  <section class="opening" aria-labelledby="home-title">
     <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">DIFFERENT SIDES, SAME ME</p>
-          <h2 id="explore-title">從你感興趣的那一面，認識我。</h2>
+      <div class="intro-grid">
+        <div class="intro-copy">
+          <div class="intro-topline">
+            <p class="eyebrow">嗨，我是展維</p>
+            <p class="dual-role">
+              資料工程師 <span aria-hidden="true">／</span> 自我成長教練
+            </p>
+          </div>
+          <h1 id="home-title">
+            做好資料工程，
+            <br />
+            也陪你找到方向。
+          </h1>
+          <p class="intro-description">
+            現任台積電資深資料工程師，也投入學涯與職涯陪伴。
+            <br class="desktop-break" />
+            我擅長把複雜的問題理清，讓下一步更有方向。
+          </p>
+          <div class="action-row">
+            <CopyEmail label="聊聊你的下一步" variant="button-lime" />
+            <a class="light-link" href="/growth/">
+              認識我的教練方式
+            </a>
+          </div>
+          <p class="action-hint">點擊按鈕複製信箱，從你正在面對的問題聊起。</p>
         </div>
-        <span class="section-number">01 — 03</span>
+        <figure class="intro-portrait">
+          <Image
+            src={portrait}
+            alt="展維 Stephen Wen 的個人照片"
+            widths={[320, 640, 960]}
+            sizes="(max-width: 800px) 76px, 280px"
+            format="webp"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <figcaption>
+            展維 <span>Stephen Wen</span>
+          </figcaption>
+        </figure>
       </div>
-      <div class="identity-grid">
-        <a class="identity-card work-card" href="/work/">
-          <div class="card-top">
-            <span class="eyebrow">01 / 資料工程</span>
-            <span class="card-plus" aria-hidden="true">
-              ＋
-            </span>
-          </div>
-          <div
-            class="work-visual"
-            role="img"
-            aria-label="部署時間從四小時縮短至十分鐘"
-          >
-            <span class="old-time">
-              4 <small>hrs</small>
-            </span>
-            <span class="metric-line" aria-hidden="true"></span>
-            <span class="new-time">
-              10 <small>min</small>
-            </span>
-            <span class="metric-caption">讓交付，跟上想法的速度。</span>
-          </div>
-          <div class="identity-body">
-            <h3>
-              把資料，做成真正
-              <br />
-              能用的價值。
-            </h3>
-            <p>
-              Senior Data
-              Engineer。從資料架構、開發效率到雲端成本，把複雜問題變成可維護的系統。
-            </p>
-            <span class="card-link">了解我的資料工程工作</span>
-          </div>
-        </a>
-        <a class="identity-card volunteer-card" href="/volunteer/">
-          <div class="card-top">
-            <span class="eyebrow">02 / 志工教育</span>
-            <span class="card-plus" aria-hidden="true">
-              ＋
-            </span>
-          </div>
-          <div class="card-photo">
-            <Image
-              src={volunteer}
-              alt="志工課輔活動中，學生圍坐完成課業"
-              widths={[400, 640, 900]}
-              sizes="(max-width: 800px) 90vw, 400px"
-              format="webp"
-              loading="lazy"
-            />
-          </div>
-          <div class="identity-body">
-            <h3>
-              一點陪伴，
-              <br />
-              讓成長多一種可能。
-            </h3>
-            <p>
-              自 2025
-              年起投入志工課輔。關心的不只是作業，也是在學習路上慢慢長出的信心。
-            </p>
-            <span class="card-link">了解我的志工經驗</span>
-          </div>
-        </a>
-        <a class="identity-card growth-card" href="/growth/">
-          <div class="card-top">
-            <span class="eyebrow">03 / 自媒體與成長</span>
-            <span class="card-plus" aria-hidden="true">
-              ＋
-            </span>
-          </div>
-          <div class="growth-visual">
-            <span class="quote-mark" aria-hidden="true">
-              “
-            </span>
-            <p>
-              成為全世界
-              <br />
-              只有你才能成為的你。
-            </p>
-            <span>@iam_wei_stephen</span>
-          </div>
-          <div class="identity-body">
-            <h3>
-              保持好奇，
-              <br />
-              也把思考留在路上。
-            </h3>
-            <p>
-              在 Threads
-              分享自驅力、職涯與科技。把自己的探索寫下來，也從不同的聲音裡學習。
-            </p>
-            <span class="card-link">看看我的成長內容</span>
-          </div>
-        </a>
-      </div>
+      <CareerPath />
     </div>
   </section>
-  <section class="belief-section container">
-    <span class="eyebrow">A COMMON THREAD</span>
-    <div>
-      <h2>
-        把問題想清楚，
-        <br />
-        讓改變真的發生。
-      </h2>
-      <p>
-        重構一條資料管線，陪學生理解一道題目，或寫下一篇關於職涯的文章。對我來說，這些事都來自同一份好奇：我們能不能，一起再往前一點？
-      </p>
+  <section
+    class="container focus-section"
+    id="explore"
+    aria-labelledby="focus-title"
+  >
+    <div class="section-intro">
+      <p class="eyebrow">兩個方向，同樣投入</p>
+      <h2 id="focus-title">把事情做好，也把人放在心上。</h2>
     </div>
-    <span class="belief-star" aria-hidden="true">
-      ✳
-    </span>
+    <div class="focus-pair">
+      <a class="focus-panel engineering-panel" href="/work/">
+        <span class="panel-number" aria-hidden="true">
+          01
+        </span>
+        <p class="eyebrow">資料工程</p>
+        <h3>
+          讓技術解決
+          <br />
+          真正的商業問題。
+        </h3>
+        <p>
+          遷移、從零建構、持續優化。把資料平台做得更快、更省，也更容易維護。
+        </p>
+        <div class="panel-proof">
+          <strong>4 小時 → 10 分鐘</strong>
+          <span>曾改善資料部署流程</span>
+        </div>
+        <span class="panel-link">看我的資料工程實績</span>
+      </a>
+      <a class="focus-panel coaching-panel" href="/growth/">
+        <span class="panel-number" aria-hidden="true">
+          02
+        </span>
+        <p class="eyebrow">自我成長教練</p>
+        <h3>
+          找到自己的理由，
+          <br />
+          走出自己的下一步。
+        </h3>
+        <p>
+          從志工課輔到均一 DreamMore
+          生涯陪伴，我陪你釐清選擇，長出屬於自己的自驅力。
+        </p>
+        <div class="panel-proof">
+          <strong>學涯探索・職涯選擇・自驅力</strong>
+          <span>從你的處境開始，一起思考</span>
+        </div>
+        <span class="panel-link">認識我的陪伴方式</span>
+      </a>
+    </div>
   </section>
-  <CoffeeChat />
+  <CoffeeChat
+    title="下一步還不清楚？一起聊聊。"
+    text="學涯、職涯，或一個反覆困擾你的成長問題。先說說你在哪裡，我們再一起看向前方。"
+    label="聊聊你的下一步"
+  />
 </Base>

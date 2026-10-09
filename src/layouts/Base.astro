@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
-import '../styles/details.css';
-import '../styles/audiences.css';
+import '../styles/focus.css';
 import { profile, navigation } from '../data/content';
 import CopyEmail from '../components/CopyEmail.astro';
 import DevelopmentAudit from '../components/DevelopmentAudit.astro';
@@ -12,8 +11,8 @@ interface Props {
   theme?: string;
 }
 const {
-  title = 'Stephen Wen — 資料工程師、志工老師與成長內容創作者',
-  description = '認識 Stephen Wen：資料工程師、教育志工與 Threads 成長內容創作者。探索資料工程成果、志工經驗與自我成長內容。',
+  title = '展維 Stephen Wen — 資料工程師與自我成長教練',
+  description = '我是展維，台積電資深資料工程師，也是自我成長教練。從資料平台到學涯與職涯，陪你把問題想清楚，找到前進的方向。',
   theme = 'home',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -22,7 +21,7 @@ const schema = {
   '@type': 'Person',
   name: profile.name,
   alternateName: 'Chan Wei Wen',
-  jobTitle: 'Senior Data Engineer',
+  jobTitle: ['資深資料工程師', '自我成長教練'],
   url: Astro.site?.href,
   sameAs: profile.socials.map((x) => x.url),
   alumniOf: [
@@ -68,7 +67,7 @@ const schema = {
             s<span>.</span>
           </span>
           <span>
-            Stephen Wen<span class="brand-sub">工程・教育・成長</span>
+            Stephen Wen<span class="brand-sub">資料工程・自我成長</span>
           </span>
         </a>
         <nav class="desktop-nav" aria-label="主要導覽">
@@ -84,7 +83,7 @@ const schema = {
           ))}
         </nav>
         <div class="header-actions">
-          <CopyEmail variant="button-small" />
+          <CopyEmail label="找我聊聊" variant="button-small" />
           <button
             class="menu-toggle"
             aria-label="開啟導覽選單"
@@ -125,7 +124,7 @@ const schema = {
     </noscript>
     <dialog id="mobile-menu" class="mobile-menu" aria-label="網站導覽">
       <div class="mobile-menu-top">
-        <span class="eyebrow">EXPLORE STEPHEN</span>
+        <span class="eyebrow">認識展維</span>
         <button type="button" class="menu-close" aria-label="關閉導覽選單">
           關閉 ×
         </button>
@@ -161,7 +160,7 @@ const schema = {
       </div>
       <div class="container footer-bottom">
         <span>© {new Date().getFullYear()} Stephen Wen</span>
-        <span>最後更新 {profile.updated} · Taiwan</span>
+        <span>最後更新 {profile.updated} · 台灣</span>
       </div>
     </footer>
     <div
@@ -171,7 +170,7 @@ const schema = {
       aria-atomic="true"
     ></div>
     <div class="manual-copy" hidden>
-      <label for="manual-email">請手動複製 Email</label>
+      <label for="manual-email">請手動複製電子信箱</label>
       <input id="manual-email" readonly value={profile.email} />
       <button type="button" class="manual-close" aria-label="關閉手動複製欄位">
         關閉
@@ -214,7 +213,7 @@ const schema = {
             clearTimeout(toastTimer);
             if (success) {
               if (manual) manual.hidden = true;
-              label.textContent = 'Email 已複製 ✓';
+              label.textContent = '信箱已複製 ✓';
               clearTimeout(buttonTimers.get(button));
               buttonTimers.set(
                 button,
